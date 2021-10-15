@@ -8,15 +8,25 @@ public class Student extends Person {
 
     @Override
     public void showMenu() {
-        System.out.println("*****************Choose an operation*****************");
-        System.out.println("1. Create Course Menu");
-        System.out.println("2. Show Course Menu");
-        System.out.println("3. Remind");
-        System.out.println("4. logout");
+        System.out.println("****************Bridge Pattern***************");
+        System.out.println(
+                "CourseMenu is dynamically configured at runtime depending on the type of the course(high level or low level) and the type of the user");
+        System.out.println("Show Student " + menuType());
+    }
+
+    private String menuType() {
+        String c = null;
+        if (courseMenu instanceof HighLevelCourseMenu) {
+            c = "HighLevelCourseMenu";
+        } else {
+            c = "LowLevelCourseMenu";
+        }
+        return c;
     }
 
     public void createMenu() {
-        courseMenu.showAddButton();
+
+        System.out.println("Create Student-Course " + menuType());
     }
 
     @Override

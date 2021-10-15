@@ -28,15 +28,13 @@ public class Facade {
             return;
         }
 
-        System.out.println("Creating Instance of type " + user.getRole());
-
         System.out.println("Attaching course to the user " + user.getUsername());
         Readfile f = new Readfile();
         theCoursesList = f.readCourses("CourseInfo.txt");
 
         showCourses(theCoursesList);
 
-        System.out.print("Choose a Course");
+        System.out.println("Choose a Course");
 
         int index = Integer.parseInt(scanner.nextLine());
         theSelectedCourse = theCoursesList.get(index);
@@ -49,12 +47,36 @@ public class Facade {
 
         System.out.println("Course Selected : " + theSelectedCourse);
 
-        thePerson = PersonFactory.createPersonInstance(user.getRole(), nCourseLevel);
-
-        thePerson.showMenu();
+        Util.showOptions();
 
         int option = Integer.parseInt(scanner.nextLine());
 
+        while (option != 3) {
+            handleOption(option, user);
+            Util.showOptions();
+            option = Integer.parseInt(scanner.nextLine());
+        }
+
+    }
+
+    public void handleOption(int option, User user) {
+        switch (option) {
+            case 0:
+                System.out.println("Creating Instance of type " + user.getRole());
+                thePerson = Person.createPersonInstance(user.getRole(), nCourseLevel);
+                thePerson.createMenu();
+                break;
+            case 1:
+                thePerson.showMenu();
+                break;
+            case 2:
+                ClassCourseList course = new ClassCourseList();
+                course.accept(new ReminderVisitor());
+                break;
+            case 3:
+                break;
+
+        }
     }
 
     public void showCourses(List<String> courses) {
