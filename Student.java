@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Student extends Person {
 
     CourseMenu courseMenu;
